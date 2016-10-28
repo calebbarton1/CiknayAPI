@@ -1,0 +1,260 @@
+#pragma once
+#include <math.h>
+
+template <typename T>
+struct  Vector2
+{
+	//new vector 2
+	Vector2(T _x = 0, T _y = 0);
+
+	//new vector 2 from another vector2
+	Vector2(const Vector2<T>& other);
+
+	//add a vector, keep original
+	Vector2<T>& operator + (const Vector2<T>& other) const;
+	//add to original vector
+	Vector2<T>& operator += (const Vector2<T>& other);
+	//add number to a copy of vector
+	Vector2<T>& operator + (float other) const;
+	//add number to original vector
+	Vector2<T>& operator += (float other);
+
+	//minus
+	Vector2<T>& operator - (const Vector2<T>)& other) const;	
+	Vector2<T>& operator -= (const Vector2<T>& other);
+	Vector2<T>& operator - (float other) const;
+	Vector2<T>& operator -= (float other);
+	
+	//divide
+	Vector2<T>& operator / (const Vector2<T>& other) const;
+	Vector2<T>& operator /= (const Vector2<T>& other);
+	Vector2<T>& operator / (float other) const;
+	Vector2<T>& operator /= (float other);
+
+	//multiply
+	Vector2<T>& operator * (const Vector2<T>& other) const;
+	Vector2<T>& operator *= (const Vector2<T>& other);
+	Vector2<T>& operator * (float other) const;
+	Vector2<T>& operator *= (float other);
+
+	//check if vector equals another
+	bool operator == (const Vector2<T>& other) const;
+	bool operator != (const Vector2<T>& other) const;
+
+	//magnitude and magnitude squared of self. Will overwrite
+	float Magnitude();
+	float MagnitudeSquared();
+
+	//magnitude and magnitude squared of self and other. keeps original
+	float Magnitude(const Vector2<T>& vec1, const Vector2<T>& vec2) const;
+	float MagnitudeSquared(const Vector2<T>& vec1, const Vector2<T>& vec2) const;
+
+	//dot product of other
+	float Dot(const Vector2<T>& vec1, const Vector2<T>& vec2) const;
+
+	//normalise vector
+	Vector2<T>& Normalise();
+
+
+public: 
+	T x;
+	T y;
+};
+
+//Constructor for new vector2
+template <typename T>
+Vector2<T>::Vector2(T _x, T _y) : x(_x), y(_y)
+{
+
+}
+
+//constructor from another vector
+
+template <typename T>
+Vector2<T>::Vector2(const Vector2<T>& other) : x(other.x), y(other.y)
+{
+
+}
+
+
+template <typename T>
+Vector2<T>& Vector2<T>::operator + (const Vector2<T>& other) const
+{
+	return Vector2<T>(x + other.x, y + other.y);
+}
+
+template <typename T>
+Vector<T>& Vector2<T>::operator += (const Vector2<T>& other)
+{
+	x += other.x;
+	y += other.y;
+
+	return *this;
+}
+
+template <typename T>
+Vector2<T>& Vector2<T>::operator + (float other) const
+{
+	return Vector2<T>(x + other, y + other);
+};
+
+template <typename T>
+Vector<T>& Vector2<T>::operator += (float other)
+{
+	x += other;
+	y += other;
+
+	return *this;
+}
+
+template <typename T>
+Vector2<T>& Vector2<T>::operator - (const Vector2<T>& other) const
+{
+	return Vector2<T>(x - other.x, y - other.y);
+}
+
+template <typename T>
+Vector<T>& Vector2<T>::operator -= (const Vector2<T>& other)
+{
+	x -= other.x;
+	y -= other.y;
+
+	return *this;
+}
+
+template <typename T>
+Vector2<T>& Vector2<T>::operator - (float other) const
+{
+	return Vector2<T>(x - other, y - other);
+};
+
+template <typename T>
+Vector<T>& Vector2<T>::operator -= (float other)
+{
+	x -= other;
+	y -= other;
+
+	return *this;
+}
+
+template <typename T>
+Vector2<T>& Vector2<T>::operator / (const Vector2<T>& other) const
+{
+	return Vector2<T>(x / other.x, y / other.y);
+}
+
+template <typename T>
+Vector<T>& Vector2<T>::operator /= (const Vector2<T>& other)
+{
+	x /= other.x;
+	y /= other.y;
+
+	return *this;
+}
+
+template <typename T>
+Vector2<T>& Vector2<T>::operator / (float other) const
+{
+	return Vector2<T>(x / other, y / other);
+};
+
+template <typename T>
+Vector<T>& Vector2<T>::operator /= (float other)
+{
+	x /= other;
+	y /= other;
+
+	return *this;
+}
+
+template <typename T>
+Vector2<T>& Vector2<T>::operator * (const Vector2<T>& other) const
+{
+	return Vector2<T>(x * other.x, y * other.y);
+}
+
+template <typename T>
+Vector<T>& Vector2<T>::operator *= (const Vector2<T>& other)
+{
+	x *= other.x;
+	y *= other.y;
+
+	return *this;
+}
+
+template <typename T>
+Vector2<T>& Vector2<T>::operator * (float other) const
+{
+	return Vector2<T>(x * other, y * other);
+};
+
+template <typename T>
+Vector<T>& Vector2<T>::operator *= (float other)
+{
+	x *= other;
+	y *= other;
+
+	return *this;
+}
+
+template <typename T>
+Vector2<T>& Vector2<T>::operator = (const Vector2<T>& other)
+{
+	x = other.x;
+	y = other.y;
+
+	return *this;
+}
+
+template <typename T>
+bool Vector2<T>::operator == (const Vector2<T>& other) const
+{
+	return (x == other.x && y == other.y);
+}
+
+template <typename T>
+bool Vector2<T>::operator != (const Vector2<T>& other) const
+{
+	return !(*this != other);
+}
+
+template <typename T>
+float Vector2<T>::Magnitude()
+{
+	return sqrt(x * x + y * y);
+}
+
+template <typename T>
+float Vector2<T>::MagnitudeSquared()
+{
+	return x * x + y * y;
+}
+
+template <typename T>
+float Vector2<T>::Magnitude(const Vector2<T>& vec1, const Vector2<T>& vec2) const
+{
+	return sqrt(vec1.x * vec2.x + vec1.y * vec2.);
+}
+
+template <typename T>
+float Vector2<T>::MagnitudeSquared(const Vector2<T>& vec1, const Vector2<T>& vec2) const
+{
+	return vec1.x * vec2.x + vec1.y * vec2.y;
+}
+
+template <typename T>
+float Vector2<T>::Dot(const Vector2<T>& vec1, const Vector2<T>& vec2) const
+{
+	return (vec1.x * vec2.x) + (vec1.y * vec2.y);
+}
+
+template <typename T>
+Vector2<T>& Vector2<T>::Normalise()
+{
+	float mag = Magnitude();
+
+	x = x / mag;
+	y = y / mag;
+
+	return Vector2<T>(x, y);
+}
