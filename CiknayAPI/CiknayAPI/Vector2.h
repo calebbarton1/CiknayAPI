@@ -38,6 +38,10 @@ public:
 	Vector2<T> operator * (float other) const;
 	Vector2<T> operator *= (float other);
 	
+
+	//dot product of other
+	float operator | (const Vector2<T>& other) const;
+
 	//copy vector to another
 	Vector2<T>& operator = (const Vector2<T>& other);
 	
@@ -48,16 +52,12 @@ public:
 	//magnitude and magnitude squared of self. Will overwrite
 	float Magnitude() const;
 	float MagnitudeSquared() const;
-
 	//magnitude and magnitude squared of self and other. keeps original
 	float Magnitude(const Vector2<T>& vec1, const Vector2<T>& vec2) const;
 	float MagnitudeSquared(const Vector2<T>& vec1, const Vector2<T>& vec2) const;
 
-	//dot product of other
-	float Dot(const Vector2<T>& vec1, const Vector2<T>& vec2) const;
-
 	//normalise vector
-	Vector2<T> Normalise() const;
+	Vector2<T> Normalise();
 
 
 public: 
@@ -216,6 +216,7 @@ Vector2<T>& Vector2<T>::operator = (const Vector2<T>& other)
 	return *this;
 }
 
+
 template <typename T>
 bool Vector2<T>::operator == (const Vector2<T>& other) const
 {
@@ -225,7 +226,13 @@ bool Vector2<T>::operator == (const Vector2<T>& other) const
 template <typename T>
 bool Vector2<T>::operator != (const Vector2<T>& other) const
 {
-	return !(*this != other);
+	return (x != other.x || y != other.y);
+}
+
+template <typename T>
+float Vector2<T>::operator | (const Vector2<T>& other) const
+{
+	return (x * other.x) + (y * other.y);
 }
 
 template <typename T>
@@ -243,7 +250,7 @@ float Vector2<T>::MagnitudeSquared() const
 template <typename T>
 float Vector2<T>::Magnitude(const Vector2<T>& vec1, const Vector2<T>& vec2) const
 {
-	return sqrt(vec1.x * vec2.x + vec1.y * vec2.);
+	return sqrt(vec1.x * vec2.x + vec1.y * vec2.y);
 }
 
 template <typename T>
@@ -253,15 +260,12 @@ float Vector2<T>::MagnitudeSquared(const Vector2<T>& vec1, const Vector2<T>& vec
 }
 
 template <typename T>
-float Vector2<T>::Dot(const Vector2<T>& vec1, const Vector2<T>& vec2) const
-{
-	return (vec1.x * vec2.x) + (vec1.y * vec2.y);
-}
-
-template <typename T>
-Vector2<T> Vector2<T>::Normalise() const
+Vector2<T> Vector2<T>::Normalise()
 {
 	const float mag = Magnitude();
 
-	return Vector2<T>(static_cast<T>(x / mag), static_cast<T>(y / mag));
+	x = x / mag;
+	y = y / mag;
+
+	return Vector2<T>(x,y);
 }
