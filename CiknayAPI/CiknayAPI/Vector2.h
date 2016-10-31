@@ -39,17 +39,19 @@ public:
 	Vector2<T> operator *= (float other);
 	
 
-	//dot product of other
+	//dot product of other. Copies the vectors and normalises them, then calculates dot.
 	float operator | (const Vector2<T>& other) const;
+	//cross product (returns z as float)
+	float operator ^ (const Vector2<T>& other) const;
 
-	//copy vector to another
-	Vector2<T>& operator = (const Vector2<T>& other);
+	//vector equal another
+	Vector2<T> operator = (const Vector2<T>& other);
 	
 	//check if vector equals another
 	bool operator == (const Vector2<T>& other) const;
 	bool operator != (const Vector2<T>& other) const;
 
-	//magnitude and magnitude squared of self. Will overwrite
+	//magnitude and magnitude squared of self. Keeps original
 	float Magnitude() const;
 	float MagnitudeSquared() const;
 	//magnitude and magnitude squared of self and other. keeps original
@@ -58,6 +60,8 @@ public:
 
 	//normalise vector
 	Vector2<T> Normalise();
+	//normalise other, keep original
+	Vector2<T> Normalise(Vector2<T>& other) const;
 
 
 public: 
@@ -66,24 +70,19 @@ public:
 };
 
 typedef Vector2<int> Vector2i;
-
 typedef Vector2<float> Vector2f;
-
 typedef Vector2<double> Vector2d;
 
 //Constructor for new vector2
 template <typename T>
 Vector2<T>::Vector2(T _x, T _y) : x(_x), y(_y)
 {
-
 }
 
 //constructor from another vector
-
 template <typename T>
 Vector2<T>::Vector2(const Vector2<T>& other) : x(other.x), y(other.y)
 {
-
 }
 
 
@@ -208,7 +207,7 @@ Vector2<T> Vector2<T>::operator *= (float other)
 }
 
 template <typename T>
-Vector2<T>& Vector2<T>::operator = (const Vector2<T>& other)
+Vector2<T> Vector2<T>::operator = (const Vector2<T>& other)
 {
 	x = other.x;
 	y = other.y;
@@ -227,12 +226,6 @@ template <typename T>
 bool Vector2<T>::operator != (const Vector2<T>& other) const
 {
 	return (x != other.x || y != other.y);
-}
-
-template <typename T>
-float Vector2<T>::operator | (const Vector2<T>& other) const
-{
-	return (x * other.x) + (y * other.y);
 }
 
 template <typename T>
@@ -262,10 +255,38 @@ float Vector2<T>::MagnitudeSquared(const Vector2<T>& vec1, const Vector2<T>& vec
 template <typename T>
 Vector2<T> Vector2<T>::Normalise()
 {
-	const float mag = Magnitude();
+	float mag = Magnitude();
 
 	x = x / mag;
 	y = y / mag;
 
-	return Vector2<T>(x,y);
+	return *this;
+}
+
+template <typename T>
+Vector2<T> Vector2<T>::Normalise(Vector2<T>& other) const
+{
+	float mag = other.Magnitude();
+
+	other.x = other.x / mag;
+	other.y = other.y / mag;
+	
+	return other;
+}
+
+template <typename T>
+float Vector2<T>::operator | (const Vector2<T>& other) const
+{
+	Vector2<T> temp = *this;
+	temp.Normalise();
+	Vector2<T> temp2 = other;
+	temp2.Normalise();
+
+	return (temp.x * temp2.x) + (temp.y * temp2.y);
+}
+
+template <typename T>
+float Vector2<T>::operator ^ (const Vector2<T>& other) const
+{
+	return (x * other.y) - (other.x * y);
 }

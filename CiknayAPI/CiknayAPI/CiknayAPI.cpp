@@ -16,24 +16,32 @@ int main()
 	test2 = test * 2;
 
 	if (test2 != test)
-	{
-		std::cout << "shit son that isnt it" <<  std::endl;
-	}
+		std::cout << "shit son that isnt it" << std::endl;
+
 
 	if (test2 == test)
 		std::cout << "shit son that is totally it" << std::endl;
 
+	test -= 2;
+	test2 /= test;
+	test2 *= 4;
+
+	test = test + 2;
+	test = test2 / test;
+
 	
-	//test.Normalise();
 
-	//float dot = test | Vector2f(10, 1);
+	float mag1 = test2.Magnitude();
+	float mag2 = test.MagnitudeSquared();
 
-	//float testmag = test.MagnitudeSquared();
+	float mag3 = test.Magnitude(test, test2);
+	float mag4 = test.MagnitudeSquared(test, test2);
 
-	test2 -= 2;
+	test.Normalise();
+	test.Normalise(test2);
 
-	float testmag = test.MagnitudeSquared(test, test2);
-
-    return 0;
+	float cross = test ^ test2;
+	float dot = test | test2;
+	//float blah = Vector2f::Magnitude(test, test2);
 }
 
