@@ -13,11 +13,11 @@ public:
 
 	//add a vector, keep original
 	Vector3<T> operator + (const Vector3<T>& other) const;
-	//add to oiginal vector
+	//add to original vector
 	Vector3<T> operator += (const Vector3<T>& other);
-	//add numbr to a copy of vector
+	//add number to a copy of vector
 	Vector3<T> operator + (T other) const;
-	//add numbr to original vector
+	//add number to original vector
 	Vector3<T> operator += (T other);
 
 	//minus
