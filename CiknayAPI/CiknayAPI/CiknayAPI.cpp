@@ -39,8 +39,8 @@ int main()
 	float mag1 = test2.Magnitude();
 	float mag2 = test.MagnitudeSquared();
 
-	float mag3 = test.Magnitude(test, test2);
-	float mag4 = test.MagnitudeSquared(test, test2);
+	float mag3 = Vector2f::Magnitude(test, test2);
+	float mag4 = Vector2f::MagnitudeSquared(test, test2);
 
 
 	test = Vector2f(0, 2);

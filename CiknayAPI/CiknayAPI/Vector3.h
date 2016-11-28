@@ -55,8 +55,8 @@ public:
 	float Magnitude() const;
 	float MagnitudeSquared() const;
 	//gets distance between two vectors. keeps original
-	float Magnitude(const Vector3<T>& vec1, const Vector3<T>& vec2) const;
-	float MagnitudeSquared(const Vector3<T>& vec1, const Vector3<T>& vec2) const;
+	static float Magnitude(const Vector3<T>& vec1, const Vector3<T>& vec2);
+	static float MagnitudeSquared(const Vector3<T>& vec1, const Vector3<T>& vec2);
 
 	//normalise vector
 	Vector3<T> Normalise();
@@ -251,7 +251,7 @@ float Vector3<T>::MagnitudeSquared() const
 }
 
 template <typename T>
-float Vector3<T>::Magnitude(const Vector3<T>& vec1, const Vector3<T>& vec2) const
+float Vector3<T>::Magnitude(const Vector3<T>& vec1, const Vector3<T>& vec2)
 {
 	Vector3<T> temp = vec2 - vec1;
 	float mag = temp.Magnitude();
@@ -259,7 +259,7 @@ float Vector3<T>::Magnitude(const Vector3<T>& vec1, const Vector3<T>& vec2) cons
 }
 
 template <typename T>
-float Vector3<T>::MagnitudeSquared(const Vector3<T>& vec1, const Vector3<T>& vec2) const
+float Vector3<T>::MagnitudeSquared(const Vector3<T>& vec1, const Vector3<T>& vec2)
 {
 	Vector3<T> temp = vec2 - vec1;
 	float sqrmag = temp.MagnitudeSquared();
