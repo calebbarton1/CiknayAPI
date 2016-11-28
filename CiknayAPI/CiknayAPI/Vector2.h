@@ -37,12 +37,6 @@ public:
 	Vector2<T> operator *= (const Vector2<T>& other);
 	Vector2<T> operator * (T other) const;
 	Vector2<T> operator *= (T other);
-	
-
-	//dot product of other. Copies the vectors and normalises them, then calculates dot.
-	float operator | (const Vector2<T>& other) const;
-	//cross product (returns z as float)
-	float operator ^ (const Vector2<T>& other) const;
 
 	//vector equal another
 	Vector2<T> operator = (const Vector2<T>& other);
@@ -52,16 +46,26 @@ public:
 	bool operator != (const Vector2<T>& other) const;
 
 	//distance between the vector and 0,0. Keeps original
-	float Magnitude() const;
-	float MagnitudeSquared() const;
+	T Magnitude() const;
+	T MagnitudeSquared() const;
+	//another method
+	static T Magnitude(const Vector2<T>& other);
+	static T MagnitudeSquared(const Vector2<T>& other);
 	//gets distance between two vectors. keeps original
-	static float Magnitude(const Vector2<T>& vec1, const Vector2<T>& vec2);
-	static float MagnitudeSquared(const Vector2<T>& vec1, const Vector2<T>& vec2);
+	static T Magnitude(const Vector2<T>& vec1, const Vector2<T>& vec2);
+	static T MagnitudeSquared(const Vector2<T>& vec1, const Vector2<T>& vec2);
 
 	//normalise vector
-	Vector2<T> Normalise();
+	void Normalise();
 	//return a copy of the normalised vector
 	Vector2<T> Normalised() const;
+	static void Normalise(Vector2<T>& other);
+	static Vector2<T> Normalised(const Vector2<T>& other);
+
+	//dot producto of two vectors
+	static T Dot(const Vector2<T>& vec1, const Vector2<T>& vec2);
+	//cross product (returns z as float)
+	static T Cross(const Vector2<T>& vec1, const Vector2<T>& vec2);
 
 
 public: 
@@ -229,35 +233,47 @@ bool Vector2<T>::operator != (const Vector2<T>& other) const
 }
 
 template <typename T>
-float Vector2<T>::Magnitude() const
+T Vector2<T>::Magnitude() const
 {
 	return sqrt(x * x + y * y);
 }
 
 template <typename T>
-float Vector2<T>::MagnitudeSquared() const
+T Vector2<T>::MagnitudeSquared() const
 {
 	return x * x + y * y;
 }
 
 template <typename T>
-float Vector2<T>::Magnitude(const Vector2<T>& vec1, const Vector2<T>& vec2)
+T Vector2<T>::Magnitude(const Vector2<T>& other)
+{
+	return sqrt(other.x * other.x + other.y * other.y);
+}
+
+template <typename T>
+T Vector2<T>::MagnitudeSquared(const Vector2<T>& other)
+{
+	return other.x * other.x + other.y * other.y;
+}
+
+template <typename T>
+T Vector2<T>::Magnitude(const Vector2<T>& vec1, const Vector2<T>& vec2)
 {
 	Vector2<T> temp = vec2 - vec1;
-	float mag = temp.Magnitude();
+	float mag = Magnitude(temp);
 	return mag;
 }
 
 template <typename T>
-float Vector2<T>::MagnitudeSquared(const Vector2<T>& vec1, const Vector2<T>& vec2)
+T Vector2<T>::MagnitudeSquared(const Vector2<T>& vec1, const Vector2<T>& vec2)
 {
 	Vector2<T> temp = vec2 - vec1;
-	float sqrmag = temp.MagnitudeSquared();
+	float sqrmag = MagnitudeSquared(temp);
 	return sqrmag;
 }
 
 template <typename T>
-Vector2<T> Vector2<T>::Normalise()
+void Vector2<T>::Normalise()
 {
 	float mag = Magnitude();
 
@@ -266,8 +282,6 @@ Vector2<T> Vector2<T>::Normalise()
 		x = x / mag;
 		y = y / mag;
 	}
-
-	return *this;
 }
 
 template <typename T>
@@ -285,15 +299,41 @@ Vector2<T> Vector2<T>::Normalised() const
 	return temp;
 }
 
-//TODO: Make functions
 template <typename T>
-float Vector2<T>::operator | (const Vector2<T>& other) const
+void Vector2<T>::Normalise(Vector2<T>& other)
 {
-	return (x * other.x) + (y * other.y);
+	float mag = other.Magnitude();
+
+	if (mag > 0)
+	{
+		other.x = other.x / mag;
+		other.y = other.y / mag;
+	}
 }
 
 template <typename T>
-float Vector2<T>::operator ^ (const Vector2<T>& other) const
+Vector2<T> Vector2<T>::Normalised(const Vector2<T>& other)
 {
-	return (x * other.y) - (other.x * y);
+	float mag = other.Magnitude();
+	Vector2<T> temp;
+
+	if (mag > 0)
+	{
+		temp.x = other.x / mag;
+		temp.y = other.y / mag;
+	}
+
+	return temp;
+}
+
+template <typename T>
+T Vector2<T>::Dot(const Vector2<T>& vec1, const Vector2<T>& vec2)
+{
+	return (vec1.x * vec2.x) + (vec1.y * vec2.y);
+}
+
+template <typename T>
+T Vector2<T>::Cross(const Vector2<T>& vec1, const Vector2<T>& vec2)
+{
+	return (vec1.x * vec2.y) - (vec2.x * vec1.y);
 }

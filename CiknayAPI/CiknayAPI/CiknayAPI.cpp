@@ -50,14 +50,20 @@ int main()
 
 	
 
-	float dot = test | test2;
-	float cross = test ^ test2;
+	float dot = Vector2f::Dot(test, test2);
+	float cross = Vector2f::Cross(test, test2);
 
 
 	Vector3f threeTest(2, 3, 4);
 	Vector3f threeTest2(5, 6, 7);
 
-	Vector3f lewl = threeTest ^ threeTest2;
+	Vector3f lewl = Vector3f::Cross(threeTest, threeTest2);
+
+	Vector2<double> magtest1 = Vector2d(2.3, 2.5);
+	Vector2<double> magtest2 = Vector2d(2.7, 3.5);
+
+	Vector2d::Normalise(magtest1);
+	Vector2d magtest3 = Vector2d::Normalised(magtest2);
 
 	//float blah = Vector2f::Magnitude(test, test2);
 }

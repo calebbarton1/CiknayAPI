@@ -38,12 +38,6 @@ public:
 	Vector3<T> operator * (T other) const;
 	Vector3<T> operator *= (T other);
 
-
-	//dot product of other. Copies the vectors and normalises them, then calculates dot.
-	float operator | (const Vector3<T>& other) const;
-	//cross product. returns another vector3 position
-	Vector3<T> operator ^ (const Vector3<T>& other) const;
-
 	//vector equal another
 	Vector3<T> operator = (const Vector3<T>& other);
 
@@ -52,16 +46,25 @@ public:
 	bool operator != (const Vector3<T>& other) const;
 
 	//distance between the vector and 0,0,0. Keeps original
-	float Magnitude() const;
-	float MagnitudeSquared() const;
+	T Magnitude() const;
+	T MagnitudeSquared() const;
+	static T Magnitude(const Vector3<T>& other);
+	static T MagnitudeSquared(const Vector3<T>& other);
 	//gets distance between two vectors. keeps original
-	static float Magnitude(const Vector3<T>& vec1, const Vector3<T>& vec2);
-	static float MagnitudeSquared(const Vector3<T>& vec1, const Vector3<T>& vec2);
+	static T Magnitude(const Vector3<T>& vec1, const Vector3<T>& vec2);
+	static T MagnitudeSquared(const Vector3<T>& vec1, const Vector3<T>& vec2);
 
 	//normalise vector
-	Vector3<T> Normalise();
+	void Normalise();
 	//return a copy of the normalised vector
 	Vector3<T> Normalised() const;
+	static void Normalise(Vector3<T>& other);
+	static Vector3<T> Normalised(const Vector3<T>& other);
+
+	//dot product of other
+	static T Dot(const Vector3<T>& vec1, const Vector3<T>& vec2);
+	//cross product. returns another vector3 position
+	static Vector3<T> Cross(const Vector3<T>& vec1, const Vector3<T>& vec2);
 
 
 public:
@@ -239,19 +242,31 @@ bool Vector3<T>::operator != (const Vector3<T>& other) const
 }
 
 template <typename T>
-float Vector3<T>::Magnitude() const
+T Vector3<T>::Magnitude() const
 {
 	return sqrt(x * x + y * y + z * z);
 }
 
 template <typename T>
-float Vector3<T>::MagnitudeSquared() const
+T Vector3<T>::MagnitudeSquared() const
 {
 	return x * x + y * y + z * z;
 }
 
 template <typename T>
-float Vector3<T>::Magnitude(const Vector3<T>& vec1, const Vector3<T>& vec2)
+T Vector3<T>::Magnitude(const Vector3<T>& other)
+{
+	return sqrt(other.x * other.x + other.y * other.y + other.z * other.z);
+}
+
+template <typename T>
+T Vector3<T>::MagnitudeSquared(const Vector3<T>& other)
+{
+	return other.x * other.x + other.y * other.y + other.z * other.z;
+}
+
+template <typename T>
+T Vector3<T>::Magnitude(const Vector3<T>& vec1, const Vector3<T>& vec2)
 {
 	Vector3<T> temp = vec2 - vec1;
 	float mag = temp.Magnitude();
@@ -259,7 +274,7 @@ float Vector3<T>::Magnitude(const Vector3<T>& vec1, const Vector3<T>& vec2)
 }
 
 template <typename T>
-float Vector3<T>::MagnitudeSquared(const Vector3<T>& vec1, const Vector3<T>& vec2)
+T Vector3<T>::MagnitudeSquared(const Vector3<T>& vec1, const Vector3<T>& vec2)
 {
 	Vector3<T> temp = vec2 - vec1;
 	float sqrmag = temp.MagnitudeSquared();
@@ -267,7 +282,7 @@ float Vector3<T>::MagnitudeSquared(const Vector3<T>& vec1, const Vector3<T>& vec
 }
 
 template <typename T>
-Vector3<T> Vector3<T>::Normalise()
+void Vector3<T>::Normalise()
 {
 	float mag = Magnitude();
 
@@ -298,18 +313,47 @@ Vector3<T> Vector3<T>::Normalised() const
 }
 
 template <typename T>
-float Vector3<T>::operator | (const Vector3<T>& other) const
+void Vector3<T>::Normalise(Vector3<T>& other)
 {
-	return (x * other.x) + (y * other.y) + (z * other.z);
+	float mag = other.Magnitude();
+
+	if (mag > 0)
+	{
+		other.x = other.x / mag;
+		other.y = other.y / mag;
+		other.z = other.z / mag;
+	}
 }
 
 template <typename T>
-Vector3<T> Vector3<T>::operator ^ (const Vector3<T>& other) const
+Vector3<T> Vector3<T>::Normalised(const Vector3<T>& other)
+{
+	float mag = other.Magnitude();
+	Vector3<T> temp;
+
+	if (mag > 0)
+	{
+		temp.x = other.x / mag;
+		temp.y = other.y / mag;
+		temp.z = other.z / mag;
+	}
+
+	return temp;
+}
+
+template <typename T>
+T Vector3<T>::Dot(const Vector3<T>& vec1, const Vector3<T>& vec2)
+{
+	return (vec1.x * vec2.x) + (vec1.y * vec2.y) + (vec1.z * vec2.z);
+}
+
+template <typename T>
+Vector3<T> Vector3<T>::Cross(const Vector3<T>& vec1, const Vector3<T>& vec2)
 {
 	Vector3<T> toReturn;
-	toReturn.x = y * other.z - z * other.y;
-	toReturn.y = z * other.x - x * other.z;
-	toReturn.z = x * other.y - y * other.x;
+	toReturn.x = vec1.y * vec2.z - vec1.z * vec2.y;
+	toReturn.y = vec1.z * vec2.x - vec1.x * vec2.z;
+	toReturn.z = vec1.x * vec2.y - vec1.y * vec2.x;
 
 	return toReturn;
 }
