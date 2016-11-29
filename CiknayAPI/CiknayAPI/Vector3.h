@@ -269,7 +269,7 @@ template <typename T>
 T Vector3<T>::Magnitude(const Vector3<T>& vec1, const Vector3<T>& vec2)
 {
 	Vector3<T> temp = vec2 - vec1;
-	float mag = temp.Magnitude();
+	T mag = temp.Magnitude();
 	return mag;
 }
 
@@ -277,14 +277,14 @@ template <typename T>
 T Vector3<T>::MagnitudeSquared(const Vector3<T>& vec1, const Vector3<T>& vec2)
 {
 	Vector3<T> temp = vec2 - vec1;
-	float sqrmag = temp.MagnitudeSquared();
+	T sqrmag = temp.MagnitudeSquared();
 	return sqrmag;
 }
 
 template <typename T>
 void Vector3<T>::Normalise()
 {
-	float mag = Magnitude();
+	T mag = Magnitude();
 
 	if (mag > 0)
 	{
@@ -299,7 +299,7 @@ void Vector3<T>::Normalise()
 template <typename T>
 Vector3<T> Vector3<T>::Normalised() const
 {
-	float mag = Magnitude();
+	T mag = Magnitude();
 	Vector3<T> temp;
 
 	if (mag > 0)
@@ -315,7 +315,7 @@ Vector3<T> Vector3<T>::Normalised() const
 template <typename T>
 void Vector3<T>::Normalise(Vector3<T>& other)
 {
-	float mag = other.Magnitude();
+	T mag = other.Magnitude();
 
 	if (mag > 0)
 	{
@@ -328,7 +328,7 @@ void Vector3<T>::Normalise(Vector3<T>& other)
 template <typename T>
 Vector3<T> Vector3<T>::Normalised(const Vector3<T>& other)
 {
-	float mag = other.Magnitude();
+	T mag = other.Magnitude();
 	Vector3<T> temp;
 
 	if (mag > 0)
