@@ -10,61 +10,100 @@
 
 int main()
 {
-	Vector2f test;
+	//vector2
+	Vector2f constructor1;
+	Vector2f constructor2 = Vector2f(10, 20);
+	constructor1 = constructor2;
 
-	test = Vector2f(25, 4);
-	Vector2f test2 = test;
-	test2 = test * 2;
+	constructor1 = constructor1 + constructor2;
+	constructor1 += 5;
+	constructor1 += constructor2;
 
-	Vector2f test4(1, 2);
-	Vector2f test5(test4);
+	constructor1 = constructor1 - constructor2;
+	constructor1 -= 5;
+	constructor1 -= constructor2;
 
+	constructor1 = constructor1 / constructor2;
+	constructor1 /= 5;
+	constructor1 /= constructor2;
 
-	if (test2 != test)
-		std::cout << "shit son that isnt it" << std::endl;
+	constructor1 = constructor1 * constructor2;
+	constructor1 *= 5;
+	constructor1 *= constructor2;
 
+	if (constructor2 == constructor1)
+		std::cout << "constructor1 is equal to constructor2" << std::endl;
 
-	if (test2 == test)
-		std::cout << "shit son that is totally it" << std::endl;
+	if (constructor2 != constructor1)
+		std::cout << "constructor1 is not equal to constructor2" << std::endl;
 
-	test -= 2;
-	test2 /= test;
-	test2 *= 4;
+	Vector2f magTest = constructor1;
+	float mag = magTest.Magnitude();
+	mag = magTest.MagnitudeSquared();
 
-	test = test + 2;
-	test = test2 / test;
+	mag = Vector2f::Magnitude(constructor2);
+	mag = Vector2f::MagnitudeSquared(constructor2);
 
-	
+	mag = Vector2f::Magnitude(magTest, constructor2);
+	mag = Vector2f::MagnitudeSquared(magTest, constructor2);
 
-	float mag1 = test2.Magnitude();
-	float mag2 = test.MagnitudeSquared();
+	Vector2f normTest(1, 1);
+	normTest.Normalise();
 
-	float mag3 = Vector2f::Magnitude(test, test2);
-	float mag4 = Vector2f::MagnitudeSquared(test, test2);
+	Vector2f norm = normTest.Normalised();
+	Vector2f::Normalise(norm);
 
+	Vector2f otherNorm = Vector2f::Normalised(constructor1);
 
-	test = Vector2f(0, 2);
-	test.Normalise();
-	test2 = Vector2f(0, 4);
-	test2.Normalise();
+	float dot = Vector2f::Dot(constructor1, constructor2);
+	float cross = Vector2f::Cross(constructor1, constructor2);
 
-	
+	//Vector3
+	Vector3f constructor3;
+	Vector3f constructor4 = Vector3f(10, 20,30);
+	constructor3 = constructor4;
 
-	float dot = Vector2f::Dot(test, test2);
-	float cross = Vector2f::Cross(test, test2);
+	constructor3 = constructor3 + constructor4;
+	constructor3 += 5;
+	constructor3 += constructor4;
 
+	constructor3 = constructor3 - constructor4;
+	constructor3 -= 5;
+	constructor3 -= constructor4;
 
-	Vector3f threeTest(2, 3, 4);
-	Vector3f threeTest2(5, 6, 7);
+	constructor3 = constructor3 / constructor4;
+	constructor3 /= 5;
+	constructor3 /= constructor4;
 
-	Vector3f lewl = Vector3f::Cross(threeTest, threeTest2);
+	constructor3 = constructor3 * constructor4;
+	constructor3 *= 5;
+	constructor3 *= constructor4;
 
-	Vector2<double> magtest1 = Vector2d(2.3, 2.5);
-	Vector2<double> magtest2 = Vector2d(2.7, 3.5);
+	if (constructor4 == constructor3)
+		std::cout << "constructor3 is equal to constructor4" << std::endl;
 
-	Vector2d::Normalise(magtest1);
-	Vector2d magtest3 = Vector2d::Normalised(magtest2);
+	if (constructor4 != constructor3)
+		std::cout << "constructor3 is not equal to constructor4" << std::endl;
 
-	//float blah = Vector2f::Magnitude(test, test2);
+	Vector3f magTest1 = constructor3;
+	float mag2 = magTest1.Magnitude();
+	mag2 = magTest1.MagnitudeSquared();
+
+	mag2 = Vector3f::Magnitude(constructor4);
+	mag2 = Vector3f::MagnitudeSquared(constructor4);
+
+	mag2 = Vector3f::Magnitude(magTest1, constructor4);
+	mag2 = Vector3f::MagnitudeSquared(magTest1, constructor4);
+
+	Vector3f normTest2(1, 1);
+	normTest2.Normalise();
+
+	Vector3f norm2(20, 30, 40);
+	Vector3f::Normalise(norm2);
+
+	Vector3f otherNorm2 = Vector3f::Normalised(constructor3);
+
+	float dot2 = Vector3f::Dot(constructor3.Normalised(), constructor4.Normalised());
+	Vector3f cross2 = Vector3f::Cross(constructor3, Vector3f(40,30,60));
 }
 

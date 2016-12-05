@@ -46,26 +46,26 @@ public:
 	bool operator != (const Vector2<T>& other) const;
 
 	//distance between the vector and 0,0. Keeps original
-	T Magnitude() const;
-	T MagnitudeSquared() const;
+	inline T Magnitude() const;
+	inline T MagnitudeSquared() const;
 	//another method
-	static T Magnitude(const Vector2<T>& other);
-	static T MagnitudeSquared(const Vector2<T>& other);
+	inline static T Magnitude(const Vector2<T>& other);
+	inline static T MagnitudeSquared(const Vector2<T>& other);
 	//gets distance between two vectors. keeps original
-	static T Magnitude(const Vector2<T>& vec1, const Vector2<T>& vec2);
-	static T MagnitudeSquared(const Vector2<T>& vec1, const Vector2<T>& vec2);
+	inline static T Magnitude(const Vector2<T>& vec1, const Vector2<T>& vec2);
+	inline static T MagnitudeSquared(const Vector2<T>& vec1, const Vector2<T>& vec2);
 
 	//normalise vector
-	void Normalise();
+	inline void Normalise();
 	//return a copy of the normalised vector
-	Vector2<T> Normalised() const;
-	static void Normalise(Vector2<T>& other);
-	static Vector2<T> Normalised(const Vector2<T>& other);
+	inline Vector2<T> Normalised() const;
+	inline static void Normalise(Vector2<T>& other);
+	inline static Vector2<T> Normalised(const Vector2<T>& other);
 
 	//dot producto of two vectors
-	static T Dot(const Vector2<T>& vec1, const Vector2<T>& vec2);
+	inline static T Dot(const Vector2<T>& vec1, const Vector2<T>& vec2);
 	//cross product (returns z as float)
-	static T Cross(const Vector2<T>& vec1, const Vector2<T>& vec2);
+	inline static T Cross(const Vector2<T>& vec1, const Vector2<T>& vec2);
 
 
 public: 
